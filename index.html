@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat App</title>
+  <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+  <!-- ブラウザの画面に見える内容 -->
+  <div class="container">
+
+    <div class="chat-area">
+      <div id="output">
+
+      </div>
+    </div>
+
+    <div class="message-area">
+      <div class="message-text">
+
+        <div>
+          name &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="username">
+        </div>
+
+        <div>
+          message<textarea id="text" row="10"></textarea><br>
+          <br>
+        </div>
+
+        <div class="send-button">
+          <button id="send">SEND</button>
+          <button id="reset">ALL RESET</button>
+        </div>
+
+
+      </div>
+
+    </div>
+
+
+
+
+  </div>
+
+　　　
+
+  <!--/ ブラウザの画面に見える内容 -->
+
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+  <!--** 以下Firebase **-->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <!-- ここにfirebaseのscriptを貼り付ける -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase.js"></script>
+
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      zapiKey: "AIzaSyATNPGvMgw7hxGDIteys494djaj-Us3kGo",
+      authDomain: "g-s-chat-application.firebaseapp.com",
+      databaseURL: "https://g-s-chat-application.firebaseio.com",
+      projectId: "g-s-chat-application",
+      storageBucket: "g-s-chat-application.appspot.com",
+      messagingSenderId: "478395523232",
+      appId: "1:478395523232:web:3b18c4715acde0ddbde9c5"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    //firebaseのデーターベース（保存させる場所）を使いますよと言うjsのコードを貼り付ける
+    // xxxxxスクリプトを貼り付ける
+    const newPostRef = firebase.database().ref();
+
+
+    // ここから下にjqueryの処理を書いて練習します
+    // 送信ボタンをクリックされたら次の処理をする
+
+    $("#send").on("click",function(){
+      var now = new Date();
+      newPostRef.push({
+
+        username:$("#username").val(),
+        text:$("#text").val(),
+        date: now.getFullYear() + '年' + (now.getMonth()+1) + '月' + now.getDate() + '日' + now.getHours() + '時' + now.getMinutes() + '分'
+
+      })
+
+      $("#text").val("");
+      $("#username").val("");
+      
+
+    });
+
+    newPostRef.on("child_added",function (data) {
+      let v =data.val();
+      let k = data.Key;
+
+      let str = `<p>${v.date}<br>${v.username}<br>${v.text}</p>`;
+
+      $("#output").append(str);
+
+    })
+    
+    $("#reset").on("click",function(){
+      newPostRef.remove()
+      $("#output").remove()
+    });
+  
+
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+body {
+	background-color: white;
+ }
+ 
+ .container {
+    width: 60%;
+    margin: 30px auto;
+  }
+
+  .chat-area {
+    height: 80vh;
+    background: #8DB4E5;
+    overflow: scroll
+  }
+
+  .message-area {
+    height: 10vh;
+    background-color: whitesmoke;
+
+   }
+
+   #username {
+       width: 50%;
+
+   }
+
+   #text {
+       width: 50%;
+   }
+   
+   .username {width: 50%;
+
+   }
+
+
+   .send-button{
+       float: right;
+   }
+
+   .message-area-text {
+    width: 80%;
+   }
+
+
+
+
+ 
+ textarea {
+	vertical-align:top;
+ }
+  
